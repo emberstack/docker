@@ -1,2 +1,1 @@
-# Docker
-Docker images
+# Repository for public Docker image definitions
