@@ -1,0 +1,1 @@
+## Images used to deploy Azure Pipelines Agent.
