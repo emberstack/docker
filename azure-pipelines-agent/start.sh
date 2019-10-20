@@ -1,6 +1,16 @@
 #!/bin/bash
 set -e
 
+PLATFORM="$(arch)"
+if [[ $PLATFORM == x86_64 ]]; then
+  PLATFORM="linux-x64"
+elif [[ $PLATFORM == arm* ]]; then
+  PLATFORM="linux-arm"
+else 
+  echo 1>&2 "Unsupported architecture"
+  exit 1
+fi
+
 if [ -z "$AZP_URL" ]; then
   echo 1>&2 "error: missing AZP_URL environment variable"
   exit 1
@@ -52,7 +62,7 @@ print_header "1. Determining matching Azure Pipelines agent..."
 AZP_AGENT_RESPONSE=$(curl -LsS \
   -u user:$(cat "$AZP_TOKEN_FILE") \
   -H 'Accept:application/json;api-version=3.0-preview' \
-  "$AZP_URL/_apis/distributedtask/packages/agent?platform=linux-x64")
+  "$AZP_URL/_apis/distributedtask/packages/agent?platform=$PLATFORM")
 
 if echo "$AZP_AGENT_RESPONSE" | jq . >/dev/null 2>&1; then
   AZP_AGENTPACKAGE_URL=$(echo "$AZP_AGENT_RESPONSE" \
