@@ -15,7 +15,9 @@ RUN apt-get update \
         libcurl3 \
         libicu55 \
         libunwind8 \
-        netcat
+        netcat \
+		zip \
+		unzip
 
 WORKDIR /azp
 
